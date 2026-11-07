@@ -1,14 +1,10 @@
 #!/bin/bash
-
-# 遇到任何错误立即退出
 set -e
 
-# 设置环境变量：强制监听 9000 端口，并绑定所有网卡地址
 export PORT="${PORT:-9000}"
 export HOST="0.0.0.0"
 
-# 打印一条日志，方便在阿里云 FC 控制台查看启动情况
-echo "Starting NeteaseCloudMusicApi on ${HOST}:${PORT}..."
+echo "Starting NeteaseCloudMusicApi..."
 
-# 启动 app.js（必须使用绝对路径 /code/app.js）
+# 直接执行 app.js
 exec node /code/app.js
