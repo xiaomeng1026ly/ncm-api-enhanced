@@ -1,9 +1,14 @@
 #!/bin/bash
 set -e
 
+# 1. 将 Node.js 20 的路径强制加入环境变量
+export PATH="/var/fc/lang/nodejs20/bin:$PATH"
+
+# 2. 设置应用端口和 Host
 export PORT="${PORT:-9000}"
 export HOST="0.0.0.0"
 
-echo "Starting NeteaseCloudMusicApi..."
+echo "Starting NeteaseCloudMusicApi with Node.js 20..."
 
+# 3. 启动应用
 exec node /code/app.js
