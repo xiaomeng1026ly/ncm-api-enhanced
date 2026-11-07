@@ -9,26 +9,26 @@ resources:
     props:
       region: ${vars.region}
       functionName: ncm-api-enhanced
-      runtime: custom
+      runtime: custom.debian10    # 核心修改：使用预装 Node.js 的 Debian 10 环境
       code: ./
       environmentVariables:
-        FC_SERVER_PORT: "9000"
-        HOST: "0.0.0.0"
+        PORT: "9000"              # 告诉 Node 项目监听 9000 端口
+        HOST: "0.0.0.0"           # 必须绑定 0.0.0.0 允许公网访问
       customRuntimeConfig:
         command:
           - /code/scf_bootstrap
-        port: 9000
-        healthCheckConfig:
-          httpGetUrl: /healthz
-          initialDelaySeconds: 5
+        port: 9000                # FC 健康检查端口
+        healthCheckConfig:        # 配置健康检查，探测根路径
+          httpGetUrl: /
+          initialDelaySeconds: 10 # 网易云 API 启动稍慢，给 10 秒缓冲
           periodSeconds: 10
-          timeoutSeconds: 3
+          timeoutSeconds: 5
           failureThreshold: 3
-      memorySize: 512
+      memorySize: 512             # 只留这个，规避 Disk 必填报错
       timeout: 30
       minInstance: 0
       maxInstance: 5
-      instanceConcurrency: 20
+      instanceConcurrency: 20     # 修正：正确的并发字段名
       triggers:
         - triggerName: httpTrigger
           triggerType: http
