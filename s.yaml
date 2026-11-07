@@ -22,7 +22,7 @@ resources:
           httpGetUrl: /
           initialDelaySeconds: 10
           periodSeconds: 10
-          timeoutSeconds: 3       # 改成了 3
+          timeoutSeconds: 3
           failureThreshold: 3
       memorySize: 512
       timeout: 30
