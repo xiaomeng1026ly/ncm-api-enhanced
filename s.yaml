@@ -9,22 +9,23 @@ resources:
     props:
       region: ${vars.region}
       functionName: ncm-api-enhanced
-      runtime: custom.debian10    # 使用预装 Node.js 的 Debian 10 环境
+      runtime: custom.debian10
       code: ./
       environmentVariables:
         PORT: "9000"
         HOST: "0.0.0.0"
       customRuntimeConfig:
+        # 【关键】这里只能有 /code/scf_bootstrap，不要有任何 bash -c 或 npm install
         command:
-          - /code/scf_bootstrap   # 直接执行我们的启动脚本，不要带 bash -c
+          - /code/scf_bootstrap
         port: 9000
         healthCheckConfig:
           httpGetUrl: /
-          initialDelaySeconds: 10 # 给应用留出启动时间
+          initialDelaySeconds: 10
           periodSeconds: 10
-          timeoutSeconds: 3       # 核心修复：必须 <= 3
+          timeoutSeconds: 3       # 【关键】必须是 1~3 之间的数字，这里写 3
           failureThreshold: 3
-      memorySize: 512             # 规避 Disk 必填报错
+      memorySize: 512
       timeout: 30
       minInstance: 0
       maxInstance: 5
