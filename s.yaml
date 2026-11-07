@@ -13,10 +13,11 @@ resources:
       code: ./
       webConfig:
         port: 9000
-        startCommand: npm install && node app.js
-      memorySize: 256
-      cpu: 0.15
-      timeout: 10
+        # 拆分命令，增加失败容错，优先锁定国内npm源，解决国外包拉取超时
+        startCommand: npm config set registry https://registry.npmmirror.com && npm install --production && node app.js
+      memorySize: 512
+      cpu: 0.25
+      timeout: 15
       minInstance: 0
       maxInstance: 5
       concurrency: 20
