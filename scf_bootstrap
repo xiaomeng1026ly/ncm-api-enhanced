@@ -1,7 +1,10 @@
 #!/bin/bash
 set -e
 
-export FC_SERVER_PORT="${FC_SERVER_PORT:-9000}"
+# custom.debian10 内置了 Node.js，直接全局调用即可
+export PORT="${PORT:-9000}"
 export HOST="0.0.0.0"
 
-exec node /code/index.js
+# 启动你的网易云 API 主入口文件
+# 注意：如果你的项目入口不是 app.js 而是 server.js，请把下面的 app.js 换成 server.js
+exec node /code/app.js
