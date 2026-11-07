@@ -1,18 +1,22 @@
 #!/bin/bash
 set -e
 
+# 1. 指定 Node.js 20 路径
 export PATH="/var/fc/lang/nodejs20/bin:$PATH"
+
+# 2. 设置环境变量
 export PORT="${PORT:-9000}"
 export HOST="0.0.0.0"
 
 echo "Checking dependencies..."
 
-# 如果云端没有 node_modules 文件夹，就自动下载（使用国内淘宝镜像加速）
+# 3. 检查并安装依赖（关键点：增加 --ignore-scripts 跳过 husky）
 if [ ! -d "/code/node_modules" ]; then
-  echo "node_modules not found, installing..."
+  echo "node_modules not found, installing with --ignore-scripts..."
   cd /code
   npm config set registry https://registry.npmmirror.com
-  npm install --production
+  # --ignore-scripts 会跳过 prepare 等生命周期脚本，避免 husky 报错
+  npm install --production --ignore-scripts
   echo "Install finished!"
 fi
 
