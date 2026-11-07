@@ -15,7 +15,6 @@ resources:
         PORT: "9000"
         HOST: "0.0.0.0"
       customRuntimeConfig:
-        # 【关键】这里只能有 /code/scf_bootstrap，不要有任何 bash -c 或 npm install
         command:
           - /code/scf_bootstrap
         port: 9000
@@ -23,7 +22,7 @@ resources:
           httpGetUrl: /
           initialDelaySeconds: 10
           periodSeconds: 10
-          timeoutSeconds: 3       # 【关键】必须是 1~3 之间的数字，这里写 3
+          timeoutSeconds: 3       # 改成了 3
           failureThreshold: 3
       memorySize: 512
       timeout: 30
