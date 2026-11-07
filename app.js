@@ -4,13 +4,19 @@ const path = require('path')
 const tmpPath = require('os').tmpdir()
 
 async function start() {
+  // 检测是否存在 anonymous_token 文件,没有则生成
   if (!fs.existsSync(path.resolve(tmpPath, 'anonymous_token'))) {
     fs.writeFileSync(path.resolve(tmpPath, 'anonymous_token'), '', 'utf-8')
   }
+  // 启动时更新anonymous_token
   const generateConfig = require('./generateConfig')
   await generateConfig()
+  
+  // 显式指定端口和 Host，确保在云环境下正常监听
   require('./server').serveNcmApi({
     checkVersion: true,
+    port: 9000,
+    host: '0.0.0.0'
   })
 }
 start()
