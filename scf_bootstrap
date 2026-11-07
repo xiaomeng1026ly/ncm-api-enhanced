@@ -6,5 +6,4 @@ export HOST="0.0.0.0"
 
 echo "Starting NeteaseCloudMusicApi..."
 
-# 直接执行 app.js
 exec node /code/app.js
