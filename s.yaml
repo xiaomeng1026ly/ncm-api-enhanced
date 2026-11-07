@@ -12,22 +12,23 @@ resources:
       runtime: custom
       code: ./
       environmentVariables:
-        PORT: "3000"
+        FC_SERVER_PORT: "9000"
         HOST: "0.0.0.0"
       customRuntimeConfig:
-        # 直接用系统自带node，先装依赖，再启动app.js
         command:
-          - bash
-          - -c
-          - npm config set registry https://registry.npmmirror.com && npm install --production && node app.js
-        port: 3000
+          - /code/scf_bootstrap
+        port: 9000
+        healthCheckConfig:
+          httpGetUrl: /healthz
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+          failureThreshold: 3
       memorySize: 512
-      cpu: 0.25
-      diskSize: 512
-      timeout: 15
+      timeout: 30
       minInstance: 0
       maxInstance: 5
-      concurrency: 20
+      instanceConcurrency: 20
       triggers:
         - triggerName: httpTrigger
           triggerType: http
