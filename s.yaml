@@ -10,7 +10,7 @@ resources:
       region: ${vars.region}
       functionName: ncm-api-enhanced
       runtime: nodejs20
-      handler: app.handler
+      handler: index.handler
       code: ./
       environmentVariables:
         PORT: "3000"
