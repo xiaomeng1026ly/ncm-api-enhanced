@@ -2,7 +2,7 @@ edition: 3.0.0
 name: ncm-api-enhanced
 access: default
 vars:
-  region: cn-hangzhou
+  region: cn-hongkong   # 【核心修改】改为香港地域，彻底免备案
 resources:
   ncm-api:
     component: fc3
@@ -20,12 +20,12 @@ resources:
         port: 9000
         healthCheckConfig:
           httpGetUrl: /
-          initialDelaySeconds: 60      # 核心修改：等待 60 秒再开始健康检查
+          initialDelaySeconds: 60      # 给云端安装依赖预留 60 秒
           periodSeconds: 10
-          timeoutSeconds: 3
-          failureThreshold: 10         # 核心修改：允许失败 10 次
-      memorySize: 512
-      timeout: 120                     # 核心修改：单次执行超时时间放宽到 120 秒
+          timeoutSeconds: 3            # 阿里云限制最大为 3
+          failureThreshold: 10
+      memorySize: 512                  # 保持单填，规避 Disk 报错
+      timeout: 120                     # 放宽超时时间至 120 秒
       minInstance: 0
       maxInstance: 5
       instanceConcurrency: 20
