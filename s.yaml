@@ -12,8 +12,8 @@ resources:
       runtime: nodejs20
       code: ./
       environmentVariables:
-        PORT: 3000
-        HOST: 0.0.0.0
+        PORT: "3000"
+        HOST: "0.0.0.0"
       webConfig:
         port: 3000
         startCommand: npm config set registry https://registry.npmmirror.com && npm install --production && node app.js
