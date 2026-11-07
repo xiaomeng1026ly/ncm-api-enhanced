@@ -1,10 +1,14 @@
 #!/bin/bash
+
+# 遇到任何错误立即退出
 set -e
 
-# custom.debian10 内置了 Node.js，直接全局调用即可
+# 设置环境变量：强制监听 9000 端口，并绑定所有网卡地址
 export PORT="${PORT:-9000}"
 export HOST="0.0.0.0"
 
-# 启动你的网易云 API 主入口文件
-# 注意：如果你的项目入口不是 app.js 而是 server.js，请把下面的 app.js 换成 server.js
+# 打印一条日志，方便在阿里云 FC 控制台查看启动情况
+echo "Starting NeteaseCloudMusicApi on ${HOST}:${PORT}..."
+
+# 启动 app.js（必须使用绝对路径 /code/app.js）
 exec node /code/app.js
